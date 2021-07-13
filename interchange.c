@@ -26,7 +26,7 @@ void main()
     printf("\n The largest number is : %d",large);
     printf("\n The smallest number is : %d",small);
     temp=a[small_pos];
-    a[large_pos]=a[small_pos];
+    a[small_pos]=a[large_pos];
     a[large_pos]=temp;
     printf("\n The interchanged array is : \n");
     for(i=0;i<n;i++){
