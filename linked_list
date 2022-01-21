@@ -1,0 +1,228 @@
+#include<stdio.h>
+
+struct node{
+    int id;
+    char name;
+    struct node* next;
+};
+struct node* head=NULL;
+
+void main(){
+    int ch;
+    while(1){
+        printf("\n1.Next emp details\n2.Delete employee\n3.Show all employee details\n4.Reset the list\n: \n5.End Misery\n");
+        printf("Enter your chice : \t");
+        scanf("%d",&ch);
+        switch(ch){
+            case 1: add();
+            break;
+            case 2: del();
+            break;
+            case 3: show();
+            break;
+            case 4: delall();
+            break;
+            case 5: exit(1);
+            break;
+            default: printf("\ninvalid input\n");
+        }
+    }
+}
+
+
+void add(){
+    struct node* temp;
+    struct node* end;
+    struct node* prev;
+    struct node* furthur;
+    int choice,i=1,j=1,pos;
+    temp=(struct node*)malloc(sizeof(struct node));
+    printf("\nEnter the details of the employee : \n");
+    printf("id:\t");
+    scanf("%d",&temp->id);
+    printf("\nname:\t");
+    scanf("%c",&temp->name);
+    if(head==NULL){
+        temp->next=NULL;
+        head=temp;
+        printf("\n Succesfully inserted into linked list");
+        
+    }
+    else{
+        printf("\n1-->Enter at begining of the linked list :");
+        printf("\n2-->Enter at end of the linked list :");
+        printf("\n3-->Enter at specific position of the linked list :");
+        printf("\nEnter your choice : \t");
+        scanf("%d",&choice);
+        switch(choice){
+            case 1:temp->next=head;
+                   head=temp;
+                   printf("\n Succesfully inserted begining");
+                   break;
+            case 2:end=head;
+                   while(end->next!=NULL){
+                       i++;
+                   }
+                   end->next=temp;
+                   temp->next=NULL;
+                   printf("\n Succesfully inserted at the end");
+                   break;
+            case 3:
+                   printf("\nEnter the position where the node is to be inserted : ");
+                   scanf("%d",&pos);
+                   struct node* end;
+                   end=head;
+                   while(end->next!=NULL){
+                           end=end->next;
+                       i++;
+                      }
+                   if(pos>i){
+                       printf("\nInvalid position");
+                      }
+                   else{
+                         furthur=head;
+                         while(j<pos){
+                              prev=furthur;
+                              furthur=furthur->next;
+                              j++;
+                           }
+                          temp->next=furthur;
+                          prev->next=temp;
+                          printf("\n Succesfully inserted at position %d",pos);
+                      }
+                   break;  
+            default:printf("\nInvalid choice");
+                   break;
+}}}
+
+void del(){
+    int place,position,i=1,data;
+    struct node* temp;
+    struct node* last;
+    struct node* target;
+    struct node* prev;
+    printf("\n1-->Delete the first node");
+    printf("\n2-->Delete the last node");
+    printf("\n3-->Delete a node at a specific location");
+    printf("\n4-->Delete a node refering with the id");
+    printf("\nEnter your choice :\t");
+    scanf("%d",&place);
+    switch(place){
+        case 1:temp=head;
+              head=head->next;
+              free(temp);
+              printf("\nDeleted the First node");
+              break;
+        case 2:last=head;
+               while(last->next!=NULL){
+                   prev=last;
+                   last=last->next;
+               }
+               free(last);
+               prev->next=NULL;
+               break;
+        case 3:printf("\nEnter the node position which need to be deleted:\t");
+               scanf("%d",&position);
+               target=head;
+               while(i<position){
+                   prev=target;
+                   target=target->next;
+                   i++;
+               }
+               prev->next=target->next;
+               free(target);
+               printf("\nDeleted the node at position %d",position);
+              break;
+        case 4:printf("\nEnter id refering to which you want to delete the node :\t");
+               scanf("%d",&data);
+               target=head;
+               while(target->next!=NULL){
+                   prev=target;
+                   if(head->id==data){
+                       head=head->next;
+                       printf("\nDeleted the node which contains the id %d",data);
+                   }
+                   else if(target->id==data){
+                       prev->next=target->next;
+                       free(target);
+                   }
+                   else{
+                       target=target->next;
+                   }
+               }
+              break;
+        default:printf("\nInvalid choice");
+                break;
+    }
+    
+}
+
+void delall(){
+    struct node* prev;
+    while(head->next!=NULL){
+        prev=head;
+        head=head->next;
+        free(prev);
+    }
+    printf("\nSuccesfully deleted all elemnts in the linked list");
+}
+
+void show(){
+    int n,pos,i=1,j=1,data;
+    struct node* temp;
+    struct node* end;
+    struct node* prev;
+    struct node* furthur;
+    printf("\n1->>Show all");
+    printf("\n2->>Show content of the linked list at position");
+    printf("\n3->>Show the position of the node in the linked list which contains a certain data");
+    printf("\n4->>Show First certain number of nodes data in the linked list");
+    printf("\nEnter your choice:\t");
+    scanf("%d",&n);
+    switch(n){
+        case 1:temp=head;
+               while(temp->next!=NULL){
+                   printf("\nid--%d\nname--%c\n",temp->id,temp->name);
+                   temp=temp->next;
+               }
+              break;
+        case 2:printf("\nEnter the position at which the data of the linked list is need to be shown:\t");
+               scanf("%d",&pos);
+               end=head;     
+               while(end->next!=NULL){
+                    end=end->next;
+                    i++;
+               }
+               if(pos>i){
+                printf("\nInvalid position");
+               }
+               else{
+                   temp=head;
+                   while(j<pos){
+                       temp=temp->next;
+                   }
+                   printf("\nid--%d\nname--%c\n",temp->id,temp->name);
+                 }
+              break;
+        case 3:printf("\nEnter the data of which the location is need to be determined:\t");
+               scanf("%d",&data);  
+               temp=head;
+               while(temp->id!=data){
+                   temp=temp->next;
+                   j++;
+               }
+               printf("\nThe data \nid--%d\nname--%c\n is present at location %d in linked list",temp->id,temp->name,j);
+              break;
+        case 4:printf("\nEnter the number of nodes which need to be shown :\t");
+               scanf("%d",&data);
+               temp=head;
+               while(i<=data){
+                   printf("\nid--%d\nname--%c\n",temp->id,temp->name);
+                   temp=temp->next;
+               }
+              break;
+        default:printf("\nInvalid choice");
+                break;
+    }
+    
+}
